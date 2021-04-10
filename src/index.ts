@@ -31,7 +31,7 @@ class App {
 
 const app = new App().app
 const port: number = 3000
-// TODO: dev, auth, header check, redis. dep
+// TODO: dev, auth, header check, redis, tets. dep
 app.listen(port, () => {
   console.log(`This app listening at http://localhost:${port}`)
 
