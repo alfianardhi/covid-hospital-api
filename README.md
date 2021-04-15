@@ -1,2 +1,2 @@
 # covid-hospital-api
-covid referral hospital 19 in jakarta
+covid19 referral hospital in jakarta
