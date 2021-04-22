@@ -4,6 +4,10 @@ import morgan from 'morgan'
 import compression from 'compression'
 import helmet from 'helmet'
 import cors from 'cors'
+import dotenv from 'dotenv'
+
+import AuthRouters from './routers/AuthRouters'
+//
 
 class App {
   public app: Application
@@ -11,6 +15,7 @@ class App {
     this.app = express()
     this.libs()
     this.routes()
+    dotenv.config()
   }
 
   private libs(): void {
@@ -26,6 +31,9 @@ class App {
     this.app.route('/').get((req: Request, res: Response) => {
       res.send('hello this is hospital api')
     })
+
+    this.app.use('/api/v1/auth', AuthRouters)
+    //
   }
 }
 
