@@ -7,7 +7,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 
 import AuthRouters from './routers/AuthRouters'
-//
+import HospitalRouters from './routers/HospitalRouters'
 
 class App {
   public app: Application
@@ -33,6 +33,7 @@ class App {
     })
 
     this.app.use('/api/v1/auth', AuthRouters)
+    this.app.use('/api/v1/hospital', HospitalRouters)
     //
   }
 }

@@ -1,4 +1,5 @@
 import { Request } from 'express'
+const db = require('../db/models')
 
 class HospitalListService {
   body: Request['body']
@@ -10,9 +11,11 @@ class HospitalListService {
   }
 
   getAll = async () => {
-    const { description } = this.body
+    const hospitals = await db.hospitals.findAll({
+      attributes: ['id', 'hospital_name', 'hospital_address', 'municipalities', 'district', 'sub_district']
+    })
 
-    return ''
+    return hospitals
   }
 
   store = async () => {

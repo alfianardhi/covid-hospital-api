@@ -1,15 +1,15 @@
 import BaseRouters from './BaseRouters'
-import MailController from '../controllers/HospitalController'
+import HospitalController from '../controllers/HospitalController'
 import { auth } from '../middleware/AuthMiddleware'
-import validate from '../middleware/MailValidate'
+import validate from '../middleware/HospitalValidate'
 
 class AskmeRouters extends BaseRouters {
   public routes(): void {
-    this.router.get('/', auth, MailController.index)
-    this.router.post('/', auth, validate, MailController.create)
-    this.router.get('/:id', auth, MailController.show)
-    this.router.put('/:id', auth, validate, MailController.update)
-    this.router.delete('/:id', auth, MailController.delete)
+    this.router.get('/', auth, HospitalController.index)
+    this.router.post('/', auth, validate, HospitalController.create)
+    this.router.get('/:id', auth, HospitalController.show)
+    this.router.put('/:id', auth, validate, HospitalController.update)
+    this.router.delete('/:id', auth, HospitalController.delete)
   }
 }
 export default new AskmeRouters().router
