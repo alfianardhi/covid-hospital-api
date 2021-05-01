@@ -29,11 +29,43 @@ class HospitalController implements IController {
   }
 
   create = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const service: HospitalService = new HospitalService(req)
+
+      const hospitals = await service.store()
+
+      res.status(200).send({
+        data: hospitals,
+        message: 'create hospital datas success'
+      })
+    } catch (error) {
+      res.status(500).send({
+        success: false,
+        message: 'Something wrong to create data. Try again later'
+      })
+    }
+
     return res
   }
 
-  show = (req: Request, res: Response): Response => {
-    return res.send('')
+  show = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const service: HospitalService = new HospitalService(req)
+
+      const hospitals = await service.getOne()
+
+      res.status(200).send({
+        data: hospitals,
+        message: 'show hospital datas success'
+      })
+    } catch (error) {
+      res.status(500).send({
+        success: false,
+        message: 'Something wrong to show data. Try again later'
+      })
+    }
+
+    return res
   }
 
   update = (req: Request, res: Response): Response => {

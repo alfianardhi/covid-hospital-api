@@ -19,15 +19,29 @@ class HospitalListService {
   }
 
   store = async () => {
-    const { description } = this.body
+    let { hospital_name, hospital_address, municipalities, district, sub_district } = this.body
 
-    return ''
+    const hospitals = await db.hospitals.create({
+      hospital_name: hospital_name,
+      hospital_address: hospital_address,
+      municipalities: municipalities,
+      district: district,
+      sub_district: sub_district
+    })
+
+    return hospitals
   }
 
   getOne = async () => {
     const { id } = this.params
 
-    return ''
+    const hospitals = await db.hospitals.findAll({
+      where: {
+        id: id
+      }
+    })
+
+    return hospitals
   }
 
   update = async () => {
