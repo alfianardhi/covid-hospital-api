@@ -68,8 +68,24 @@ class HospitalController implements IController {
     return res
   }
 
-  update = (req: Request, res: Response): Response => {
-    return res.send('')
+  update = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const service: HospitalService = new HospitalService(req)
+
+      const hospitals = await service.update()
+
+      res.status(200).send({
+        data: hospitals,
+        message: 'update hospital datas success'
+      })
+    } catch (error) {
+      res.status(500).send({
+        success: false,
+        message: 'Something wrong to update data. Try again later'
+      })
+    }
+
+    return res
   }
 
   delete = (req: Request, res: Response): Response => {
