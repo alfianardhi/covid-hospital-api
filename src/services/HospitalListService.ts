@@ -66,9 +66,17 @@ class HospitalListService {
   }
 
   delete = async () => {
-    const { id } = this.params
+    let { id } = this.body
 
-    return ''
+    const hospitals = await db.hospitals.destroy(
+      {
+        where: {
+          id: id
+        }
+      }
+    )
+
+    return hospitals
   }
 }
 export default HospitalListService
