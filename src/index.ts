@@ -40,9 +40,11 @@ class App {
 
 const app = new App().app
 const port: number = 3700
-// TODO: dev, logging, redis, test. dep
+// TODO: dev, logging(https://stackify.com/node-js-logging/), redis, test. dep
 app.listen(port, () => {
   console.log(`This app listening at http://localhost:${port}`)
 
   console.log(`This app run is ${process.env.DB_HOST}`)
 })
+
+export default app
