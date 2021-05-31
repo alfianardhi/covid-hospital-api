@@ -10,16 +10,16 @@ class AuthController {
       let passwordHash = await Authentication.passwordHash(password)
       await db.user.create({
         username: username,
-        password: passwordHash,
+        password: passwordHash
       })
 
       res.status(201).send({
-        message: 'Register Success',
+        message: 'Register Success'
       })
     } catch (error) {
       res.status(500).send({
         success: false,
-        message: 'Something wrong. Try again later',
+        message: 'Something wrong. Try again later'
       })
     }
 
@@ -33,7 +33,7 @@ class AuthController {
     let { username, password } = req.body
 
     const user = await db.user.findOne({
-      where: { username: username },
+      where: { username: username }
     })
 
     if (user) {
@@ -44,9 +44,9 @@ class AuthController {
         //generate token
         let token = Authentication.generateToken(user.id, username, user.password)
         if (token) {
-          return res.status(200).send({
+          return res.status(201).send({
             token: token,
-            message: 'Generate token success',
+            message: 'Generate token success'
           })
         } else {
           errMessage = 'Generate token failed'
@@ -56,10 +56,13 @@ class AuthController {
       }
     } else {
       errMessage = 'Invalid user'
+      return res.status(403).send({
+        message: errMessage
+      })
     }
 
-    return res.status(500).send({
-      message: errMessage,
+    return res.status(401).send({
+      message: errMessage
     })
   }
 

@@ -34,7 +34,7 @@ class HospitalController implements IController {
 
       const hospitals = await service.store()
 
-      res.status(200).send({
+      res.status(201).send({
         data: hospitals,
         message: 'create hospital datas success'
       })
