@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http'
 import app from '../src/index'
 
 chai.use(chaiHttp)
-
+//TODO: fix update & delete
 describe('Register api /register POST', () => {
   it('Do Register api', (done) => {
     chai
@@ -19,7 +19,6 @@ describe('Register api /register POST', () => {
         done()
       })
   })
-
   it('Do Register api (null value)', (done) => {
     chai
       .request(app)
@@ -109,19 +108,33 @@ describe('Update Hospital Data /hospital POST', () => {
         expect(res.body).to.have.property('token')
         var token = res.body.token
 
-        //auth token
-        // chai
-        //   .request(app)
-        //   .get('/api/v1/hospital')
-        //   .set('Authorization', 'Bearer ' + token)
-        //   .end((err, res) => {
-        //     if (err) done(err)
-        //     console.log('run get data')
-        //     expect(res).to.be.not.equal(null)
-        //     expect(res).have.status(200)
-        //     expect(res).to.be.json
-        //   })
+        chai
+          .request(app)
+          .get('/api/v1/hospital/3')
+          .set('Authorization', 'Bearer ' + token)
+          .end((err, res) => {
+            if (err) done(err)
+            console.log('run get data')
+            console.log('CEK --- ', res.body.data[0].id)
 
+            chai
+              .request(app)
+              .put('/api/v1/hospital/' + res.body.data[0].id)
+              .set('Authorization', 'Bearer ' + token)
+              .send({
+                hospital_name: 'RSKD DUREN SAWIT x',
+                hospital_address: 'JL. DUREN SAWIT BARU NO.2',
+                municipalities: 'JAKARTA TIMUR',
+                district: 'DUREN SAWIT',
+                sub_district: 'DUREN SAWIT'
+              })
+              .end((err, res) => {
+                if (err) done(err)
+                console.log('run update data')
+                expect(res).to.be.not.equal(null)
+                expect(res).have.status(200)
+              })
+          })
         done()
       })
   })
