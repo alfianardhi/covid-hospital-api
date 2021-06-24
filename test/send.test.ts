@@ -3,22 +3,8 @@ import chaiHttp from 'chai-http'
 import app from '../src/index'
 
 chai.use(chaiHttp)
-//TODO: fix update & delete
+//TODO: dep
 describe('Register api /register POST', () => {
-  it('Do Register api', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/auth/register')
-      .send({
-        username: 'tester',
-        password: '12345678'
-      })
-      .end((err, res) => {
-        if (err) done(err)
-        expect(res).have.status(201)
-        done()
-      })
-  })
   it('Do Register api (null value)', (done) => {
     chai
       .request(app)
@@ -122,7 +108,7 @@ describe('Update Hospital Data /hospital POST', () => {
               .put('/api/v1/hospital/' + res.body.data[0].id)
               .set('Authorization', 'Bearer ' + token)
               .send({
-                hospital_name: 'RSKD DUREN SAWIT x',
+                hospital_name: 'RSKD DUREN SAWIT',
                 hospital_address: 'JL. DUREN SAWIT BARU NO.2',
                 municipalities: 'JAKARTA TIMUR',
                 district: 'DUREN SAWIT',
@@ -141,7 +127,7 @@ describe('Update Hospital Data /hospital POST', () => {
 })
 
 describe('Delete Hospital Data /hospital POST', () => {
-  it('Do delete hospital data', (done) => {
+  it('Do Delete hospital data', (done) => {
     chai
       .request(app)
       .post('/api/v1/auth/login')
@@ -158,19 +144,26 @@ describe('Delete Hospital Data /hospital POST', () => {
         expect(res.body).to.have.property('token')
         var token = res.body.token
 
-        //auth token
-        // chai
-        //   .request(app)
-        //   .get('/api/v1/hospital')
-        //   .set('Authorization', 'Bearer ' + token)
-        //   .end((err, res) => {
-        //     if (err) done(err)
-        //     console.log('run get data')
-        //     expect(res).to.be.not.equal(null)
-        //     expect(res).have.status(200)
-        //     expect(res).to.be.json
-        //   })
+        chai
+          .request(app)
+          .get('/api/v1/hospital/5')
+          .set('Authorization', 'Bearer ' + token)
+          .end((err, res) => {
+            if (err) done(err)
+            console.log('run get data')
+            console.log('ID --- ', res.body.data[0].id)
 
+            chai
+              .request(app)
+              .delete('/api/v1/hospital/' + res.body.data[0].id)
+              .set('Authorization', 'Bearer ' + token)
+              .end((err, res) => {
+                if (err) done(err)
+                console.log('run delete data')
+                expect(res).to.be.not.equal(null)
+                expect(res).have.status(200)
+              })
+          })
         done()
       })
   })

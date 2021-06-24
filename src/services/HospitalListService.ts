@@ -45,7 +45,8 @@ class HospitalListService {
   }
 
   update = async () => {
-    let { id, hospital_name, hospital_address, municipalities, district, sub_district } = this.body
+    let { hospital_name, hospital_address, municipalities, district, sub_district } = this.body
+    let { id } = this.params
 
     const hospitals = await db.hospitals.update(
       {
@@ -66,15 +67,13 @@ class HospitalListService {
   }
 
   delete = async () => {
-    let { id } = this.body
+    let { id } = this.params
 
-    const hospitals = await db.hospitals.destroy(
-      {
-        where: {
-          id: id
-        }
+    const hospitals = await db.hospitals.destroy({
+      where: {
+        id: id
       }
-    )
+    })
 
     return hospitals
   }
