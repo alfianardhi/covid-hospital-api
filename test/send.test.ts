@@ -5,6 +5,21 @@ import app from '../src/index'
 chai.use(chaiHttp)
 //TODO: dep
 describe('Register api /register POST', () => {
+  it('Do Register api', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/register')
+      .send({
+        username: 'tester',
+        password: '12345678'
+      })
+      .end((err, res) => {
+        if (err) done(err)
+        expect(res).have.status(201)
+        done()
+      })
+  })
+
   it('Do Register api (null value)', (done) => {
     chai
       .request(app)
