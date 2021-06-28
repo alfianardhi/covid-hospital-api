@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http'
 import app from '../src/index'
 
 chai.use(chaiHttp)
-//TODO: dep
+//TODO: deply
 describe('Register api /register POST', () => {
   it('Do Register api', (done) => {
     chai
